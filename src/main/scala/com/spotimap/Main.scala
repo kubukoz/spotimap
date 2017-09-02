@@ -18,13 +18,13 @@ object Main extends UserRoutes {
   val routes: Route = userRoutes
 
   def main(args: Array[String]): Unit = {
-    val serverBindingFuture = Http().bindAndHandle(routes, "localhost", port)
+    val server = Http().bindAndHandle(routes, "localhost", port)
 
     println(s"Server online at http://localhost:$port/\nPress RETURN to stop...")
 
     StdIn.readLine()
 
-    serverBindingFuture
+    server
       .flatMap(_.unbind())
       .onComplete { _ =>
         system.terminate()
