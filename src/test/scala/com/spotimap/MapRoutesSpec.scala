@@ -14,6 +14,6 @@ class MapRoutesSpec extends WordSpec with ScalatestRouteTest with Matchers with 
 
   }
 
-  override val api: SpotifyApi[Future] = ???
+  override val api: SpotifyApi[Future] = null
 }
 
