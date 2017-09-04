@@ -12,6 +12,7 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.io.StdIn
 
 object Main extends MapRoutes {
+  type Result[+T] = Future[T]
   private val port = 8080
 
   implicit val system: ActorSystem = ActorSystem("spotimap")
@@ -19,7 +20,7 @@ object Main extends MapRoutes {
   implicit val executionContext: ExecutionContext = system.dispatcher
 
   private implicit val client = new SpotifyClientImpl()
-  protected val api: SpotifyApi[Future] = new SpotifyApi[Future]()
+  protected val api: SpotifyApi[Result] = new SpotifyApi[Result]()
 
   val routes: Route = logRequestResult("request/result") {
     mapRoutes

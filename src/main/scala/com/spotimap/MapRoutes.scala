@@ -6,11 +6,10 @@ import com.spotimap.client.SpotifyApi
 import com.spotimap.directives._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
 trait MapRoutes {
-  protected val api: SpotifyApi[Future]
+  protected val api: SpotifyApi[Main.Result]
 
   val mapRoutes: Route = {
     spotifyToken { implicit token =>

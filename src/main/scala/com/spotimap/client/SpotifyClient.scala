@@ -7,6 +7,7 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.stream.Materializer
+import com.spotimap.Main
 import com.spotimap.model.external.SpotifyToken
 import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
 import io.circe.Decoder
@@ -25,12 +26,12 @@ abstract class SpotifyClient[F[_]] {
 }
 
 class SpotifyClientImpl(implicit system: ActorSystem, am: Materializer, ec: ExecutionContext)
-  extends SpotifyClient[Future]{
+  extends SpotifyClient[Main.Result]{
 
   private val http = Http()
 
   override protected def httpCallRaw[T: Decoder](method: HttpMethod, path: String, absolute: Boolean)
-                                     (implicit token: SpotifyToken): Future[T] = {
+                                     (implicit token: SpotifyToken): Main.Result[T] = {
     val getUrl: String => String = if(absolute) identity else fullUrl
 
     val authorization = Authorization(OAuth2BearerToken(token.value))
