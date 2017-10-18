@@ -5,8 +5,7 @@ import akka.http.scaladsl.server.Route
 import com.spotimap.client.SpotifyApi
 import com.spotimap.directives._
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
-
-import scala.concurrent.ExecutionContext.Implicits.global
+import util.Implicits.globalEC
 
 trait MapRoutes {
   protected val api: SpotifyApi[Main.Result]
