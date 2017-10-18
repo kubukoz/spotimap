@@ -13,7 +13,7 @@ import scala.io.StdIn
 
 object Main extends MapRoutes {
   type Result[+T] = Future[T]
-  private val port = 8080
+  private val port = 2137
 
   implicit val system: ActorSystem = ActorSystem("spotimap")
   implicit val materializer: ActorMaterializer = ActorMaterializer()

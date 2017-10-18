@@ -5,9 +5,7 @@ import io.circe.generic.semiauto
 
 case class Player(context: PlayerContext)
 
-sealed trait PlayerContext extends Product with Serializable {
-  def href: String
-}
+sealed trait PlayerContext extends Product with Serializable
 
 object PlayerContext {
   private val decoders = Map(

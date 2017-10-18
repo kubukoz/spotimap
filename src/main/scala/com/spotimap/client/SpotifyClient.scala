@@ -12,7 +12,7 @@ import com.spotimap.model.external.SpotifyToken
 import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
 import io.circe.Decoder
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 import scala.language.higherKinds
 
 abstract class SpotifyClient[F[_]] {
