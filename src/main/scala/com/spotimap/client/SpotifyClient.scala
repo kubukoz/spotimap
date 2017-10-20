@@ -15,6 +15,7 @@ object SpotifyClient {
 
   private[client] def get[Response: Decoder](path: String, absolute: Boolean = false)(
     implicit token: SpotifyToken): SpotifyAlgebra[Response] = {
+
     val url = transformUrl(absolute)(path)
     Get(url, token, Decoder.apply)
   }
