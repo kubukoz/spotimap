@@ -9,7 +9,7 @@ import akka.stream.Materializer
 import cats.instances.future._
 import cats.syntax.flatMap._
 import cats.syntax.functor._
-import com.spotimap.Main.Result
+import com.spotimap.Result
 import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
 import io.circe.{Decoder, Encoder}
 
