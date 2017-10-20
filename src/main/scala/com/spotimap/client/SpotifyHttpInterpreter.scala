@@ -24,7 +24,7 @@ class SpotifyHttpInterpreter[F[_] : Monad](client: HttpClient[F]) extends Spotif
 
   override def apply[A](fa: SpotifyAlgebra[A]): F[A] = fa match {
     case Get(url, token, decoder) =>
-      client.httpCallRaw[A](GET, url, None, toHeaders(token))(decoder)
+      client.httpCallRaw[A](GET, url, body = None, toHeaders(token))(decoder)
   }
 
 }
