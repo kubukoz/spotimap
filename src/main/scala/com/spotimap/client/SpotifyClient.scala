@@ -1,49 +1,24 @@
 package com.spotimap.client
 
-import akka.actor.ActorSystem
-import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.HttpMethods.GET
-import akka.http.scaladsl.model._
-import akka.http.scaladsl.model.headers.{Authorization, OAuth2BearerToken}
-import akka.http.scaladsl.unmarshalling.Unmarshal
-import akka.stream.Materializer
-import com.spotimap.Main
+import cats.instances.future._
+import cats.syntax.flatMap._
+import cats.syntax.functor._
+import com.spotimap.client.SpotifyAlgebra.Get
+import com.spotimap.config.SpotifyConfig
+import com.spotimap.config.SpotifyConfig.ApiPrefix
 import com.spotimap.model.external.SpotifyToken
-import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
 import io.circe.Decoder
 
-import scala.concurrent.ExecutionContext
 import scala.language.higherKinds
 
-abstract class SpotifyClient[F[_]] {
-  private[client] def get[T: Decoder](path: String, absolute: Boolean = false)
-                                     (implicit token: SpotifyToken): F[T] = {
-    httpCallRaw[T](GET, path, absolute)
+object SpotifyClient {
+  private val fullUrl: String => String = ApiPrefix + _
+
+  private[client] def get[Response: Decoder](path: String, absolute: Boolean = false)
+                                            (implicit token: SpotifyToken): SpotifyAlgebra[Response] = {
+    val url = transformUrl(absolute)(path)
+    Get(url, token, Decoder.apply)
   }
 
-  protected def httpCallRaw[T: Decoder](method: HttpMethod, path: String, absolute: Boolean)
-                                     (implicit token: SpotifyToken): F[T]
-}
-
-class SpotifyClientImpl(implicit system: ActorSystem, am: Materializer, ec: ExecutionContext)
-  extends SpotifyClient[Main.Result]{
-
-  private val http = Http()
-
-  override protected def httpCallRaw[T: Decoder](method: HttpMethod, path: String, absolute: Boolean)
-                                     (implicit token: SpotifyToken): Main.Result[T] = {
-    val getUrl: String => String = if(absolute) identity else fullUrl
-
-    val authorization = Authorization(OAuth2BearerToken(token.value))
-    val headers: List[HttpHeader] = List(authorization)
-
-    val request = HttpRequest(method, Uri.parseAbsolute(getUrl(path)), headers)
-
-    for {
-      response <- http.singleRequest(request)
-      result <- Unmarshal(response.entity).to[T]
-    } yield result
-  }
-
-  private val fullUrl: String => String = "https://api.spotify.com" + _
+  private def transformUrl(absolute: Boolean): String => String = if (absolute) identity else fullUrl
 }

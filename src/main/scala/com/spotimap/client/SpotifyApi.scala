@@ -1,43 +1,43 @@
 package com.spotimap.client
 
-import cats.Monad
+import cats.free.Free.liftF
 import cats.syntax.applicative._
 import cats.syntax.flatMap._
 import cats.syntax.functor._
+import com.spotimap.SpotifyProgram
+import com.spotimap.config.SpotifyConfig.PlayerUrl
 import com.spotimap.model.external.SpotifyToken
 import com.spotimap.model.external.player.{Player, PlayerContext, PlaylistContext}
 import com.spotimap.model.external.playlist.{Playlist, Track}
 import io.circe.generic.auto._
 
-import scala.concurrent.ExecutionContext
 import scala.language.higherKinds
 
-final class SpotifyApi[F[+_] : Monad](implicit client: SpotifyClient[F],
-                                     ec: ExecutionContext) {
+object SpotifyApi {
 
-  object player {
-    private def get()(implicit token: SpotifyToken): F[Player] =
-      client.get[Player]("/v1/me/player")
+  object userPlayer {
+    private def get()(implicit token: SpotifyToken): SpotifyProgram[Player] = liftF {
+      SpotifyClient.get[Player](PlayerUrl)
+    }
 
-    def currentSongs()(implicit token: SpotifyToken): F[List[Track]] = {
-      val getItems: PlayerContext => F[List[Track]] = {
+    def currentSongs()(implicit token: SpotifyToken): SpotifyProgram[List[Track]] = {
+      val getItems: PlayerContext => SpotifyProgram[List[Track]] = {
         case PlaylistContext(href) =>
           playlist.getByUrl(href).map(_.tracks.items.map(_.track))
-        case _ => Nil.pure[F]
+
+        case _ => List.empty[Track].pure[SpotifyProgram]
       }
 
       for {
-        player <- player.get()
+        player <- userPlayer.get()
         tracks <- getItems(player.context)
       } yield tracks
     }
   }
 
   private object playlist {
-    def getByUrl(playlistUrl: String)
-                                    (implicit token: SpotifyToken): F[Playlist] = {
-      client.get[Playlist](playlistUrl, absolute = true)
+    def getByUrl(playlistUrl: String)(implicit token: SpotifyToken): SpotifyProgram[Playlist] = liftF {
+      SpotifyClient.get[Playlist](playlistUrl, absolute = true)
     }
   }
-
 }
