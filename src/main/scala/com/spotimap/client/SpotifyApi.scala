@@ -34,8 +34,7 @@ final class SpotifyApi[F[+_] : Monad](implicit client: SpotifyClient[F],
   }
 
   private object playlist {
-    def getByUrl(playlistUrl: String)
-                                    (implicit token: SpotifyToken): F[Playlist] = {
+    def getByUrl(playlistUrl: String)(implicit token: SpotifyToken): F[Playlist] = {
       client.get[Playlist](playlistUrl, absolute = true)
     }
   }

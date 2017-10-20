@@ -6,7 +6,7 @@ import akka.http.scaladsl.server.Directives.logRequestResult
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 import cats.instances.future._
-import com.spotimap.client.{SpotifyApi, SpotifyClientImpl}
+import com.spotimap.client.{HttpClientImpl, SpotifyApi, SpotifyClient}
 import com.spotimap.util.Implicits.globalEC
 
 import scala.concurrent.Future
@@ -19,7 +19,7 @@ object Main extends MapRoutes {
   implicit val system: ActorSystem = ActorSystem("spotimap")
   implicit val materializer: ActorMaterializer = ActorMaterializer()
 
-  private implicit val client = new SpotifyClientImpl()
+  private implicit val client = new SpotifyClient(new HttpClientImpl)
 
   protected val api: SpotifyApi[Result] = new SpotifyApi[Result]()
 
