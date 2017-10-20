@@ -33,11 +33,11 @@ object SpotifyApi {
         tracks <- getItems(player.context)
       } yield tracks
     }
+  }
 
-    private object playlist {
-      def getByUrl(playlistUrl: String)(implicit token: SpotifyToken): SpotifyProgram[Playlist] = liftF {
-        SpotifyClient.get[Playlist](playlistUrl, absolute = true)
-      }
+  private object playlist {
+    def getByUrl(playlistUrl: String)(implicit token: SpotifyToken): SpotifyProgram[Playlist] = liftF {
+      SpotifyClient.get[Playlist](playlistUrl, absolute = true)
     }
   }
 }
