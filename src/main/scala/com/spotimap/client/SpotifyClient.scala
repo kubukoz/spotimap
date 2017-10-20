@@ -16,32 +16,31 @@ import scala.concurrent.ExecutionContext
 import scala.language.higherKinds
 
 abstract class SpotifyClient[F[_]] {
-  private[client] def get[T: Decoder](path: String, absolute: Boolean = false)
-                                     (implicit token: SpotifyToken): F[T] = {
+  private[client] def get[T: Decoder](path: String, absolute: Boolean = false)(implicit token: SpotifyToken): F[T] = {
     httpCallRaw[T](GET, path, absolute)
   }
 
-  protected def httpCallRaw[T: Decoder](method: HttpMethod, path: String, absolute: Boolean)
-                                     (implicit token: SpotifyToken): F[T]
+  protected def httpCallRaw[T: Decoder](method: HttpMethod, path: String, absolute: Boolean)(
+    implicit token: SpotifyToken): F[T]
 }
 
 class SpotifyClientImpl(implicit system: ActorSystem, am: Materializer, ec: ExecutionContext)
-  extends SpotifyClient[Main.Result]{
+    extends SpotifyClient[Main.Result] {
 
   private val http = Http()
 
-  override protected def httpCallRaw[T: Decoder](method: HttpMethod, path: String, absolute: Boolean)
-                                     (implicit token: SpotifyToken): Main.Result[T] = {
-    val getUrl: String => String = if(absolute) identity else fullUrl
+  override protected def httpCallRaw[T: Decoder](method: HttpMethod, path: String, absolute: Boolean)(
+    implicit token: SpotifyToken): Main.Result[T] = {
+    val getUrl: String => String = if (absolute) identity else fullUrl
 
-    val authorization = Authorization(OAuth2BearerToken(token.value))
+    val authorization             = Authorization(OAuth2BearerToken(token.value))
     val headers: List[HttpHeader] = List(authorization)
 
     val request = HttpRequest(method, Uri.parseAbsolute(getUrl(path)), headers)
 
     for {
       response <- http.singleRequest(request)
-      result <- Unmarshal(response.entity).to[T]
+      result   <- Unmarshal(response.entity).to[T]
     } yield result
   }
 

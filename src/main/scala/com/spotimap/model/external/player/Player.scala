@@ -14,7 +14,7 @@ object PlayerContext {
 
   implicit val decoder: Decoder[PlayerContext] = for {
     contextType <- Decoder[String].prepare(_.downField("type"))
-    value <- decoders(contextType)
+    value       <- decoders(contextType)
   } yield value
 }
 

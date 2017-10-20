@@ -12,8 +12,7 @@ import io.circe.generic.auto._
 import scala.concurrent.ExecutionContext
 import scala.language.higherKinds
 
-final class SpotifyApi[F[+_] : Monad](implicit client: SpotifyClient[F],
-                                     ec: ExecutionContext) {
+final class SpotifyApi[F[+ _]: Monad](implicit client: SpotifyClient[F], ec: ExecutionContext) {
 
   object player {
     private def get()(implicit token: SpotifyToken): F[Player] =
@@ -34,8 +33,7 @@ final class SpotifyApi[F[+_] : Monad](implicit client: SpotifyClient[F],
   }
 
   private object playlist {
-    def getByUrl(playlistUrl: String)
-                                    (implicit token: SpotifyToken): F[Playlist] = {
+    def getByUrl(playlistUrl: String)(implicit token: SpotifyToken): F[Playlist] = {
       client.get[Playlist](playlistUrl, absolute = true)
     }
   }

@@ -16,7 +16,7 @@ object Main extends MapRoutes {
   type Result[+T] = Future[T]
   private val port = 2137
 
-  implicit val system: ActorSystem = ActorSystem("spotimap")
+  implicit val system: ActorSystem             = ActorSystem("spotimap")
   implicit val materializer: ActorMaterializer = ActorMaterializer()
 
   private implicit val client = new SpotifyClientImpl()
@@ -38,12 +38,8 @@ object Main extends MapRoutes {
 
     StdIn.readLine()
 
-    server
-      .flatMap(_.unbind())
-      .onComplete { _ =>
-        system.terminate()
-      }
+    server.flatMap(_.unbind()).onComplete { _ =>
+      system.terminate()
+    }
   }
 }
-
-
