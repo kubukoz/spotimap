@@ -16,6 +16,7 @@ import scala.language.higherKinds
 object SpotifyApi {
 
   object userPlayer {
+
     private def get()(implicit token: SpotifyToken): SpotifyProgram[Player] = liftF {
       SpotifyClient.get[Player](PlayerUrl)
     }
@@ -36,6 +37,7 @@ object SpotifyApi {
   }
 
   private object playlist {
+
     def getByUrl(playlistUrl: String)(implicit token: SpotifyToken): SpotifyProgram[Playlist] = liftF {
       SpotifyClient.get[Playlist](playlistUrl, absolute = true)
     }
