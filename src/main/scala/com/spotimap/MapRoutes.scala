@@ -2,20 +2,25 @@ package com.spotimap
 
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
-import com.spotimap.client.SpotifyApi
+import cats.instances.future._
+import com.spotimap.client.{SpotifyApi, SpotifyInterpreter}
 import com.spotimap.directives._
+import com.spotimap.util.Implicits.{convert, globalEC}
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
-import util.Implicits.globalEC
+
+import scala.concurrent.Future
 
 trait MapRoutes {
-  protected val api: SpotifyApi[Main.Result]
+  implicit val interpreter: SpotifyInterpreter[Main.Result]
 
   val mapRoutes: Route = {
     spotifyToken { implicit token =>
       get {
         pathPrefix("current-tracks") {
           complete {
-            api.player.currentSongs().map(_.map(_.name))
+            convert[List[String], Future] {
+              SpotifyApi.userPlayer.currentSongs().map(_.map(_.name))
+            }
           }
         }
       }

@@ -1,10 +1,9 @@
 package com.spotimap
 
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import com.spotimap.client.SpotifyApi
+import com.spotimap.Main.Result
+import com.spotimap.client.SpotifyInterpreter
 import org.scalatest.{Matchers, WordSpec}
-
-import scala.concurrent.Future
 
 class MapRoutesSpec extends WordSpec with ScalatestRouteTest with Matchers with MapRoutes {
 
@@ -14,6 +13,6 @@ class MapRoutesSpec extends WordSpec with ScalatestRouteTest with Matchers with 
 
   }
 
-  override val api: SpotifyApi[Future] = null
+  override implicit val interpreter: SpotifyInterpreter[Result] = ???
 }
 

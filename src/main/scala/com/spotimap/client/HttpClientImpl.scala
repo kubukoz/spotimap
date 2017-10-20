@@ -21,8 +21,7 @@ class HttpClientImpl(implicit system: ActorSystem, am: Materializer, ec: Executi
 
   private val http = Http()
 
-  override private[client] def serialize[T: Encoder]: T => Result[RequestEntity] =
-    Marshal(_).to[RequestEntity]
+  override private[client] def serialize[T : Encoder](input: T): Result[RequestEntity] = Marshal(input).to[RequestEntity]
 
   override private[client] def httpCallRaw[T: Decoder](method: HttpMethod, path: String,
                                                        body: Option[RequestEntity], headers: List[HttpHeader]): Result[T] = {
