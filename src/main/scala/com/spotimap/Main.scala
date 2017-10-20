@@ -15,10 +15,10 @@ import scala.language.higherKinds
 object Main extends MapRoutes {
   private val port = 2137
 
-  implicit val system: ActorSystem = ActorSystem("spotimap")
+  implicit val system: ActorSystem             = ActorSystem("spotimap")
   implicit val materializer: ActorMaterializer = ActorMaterializer()
 
-  private val client: HttpClient[Result] = new HttpClientImpl
+  private val client: HttpClient[Result]               = new HttpClientImpl
   override val interpreter: SpotifyInterpreter[Result] = new SpotifyHttpInterpreter(client)
 
   val routes: Route = logRequestResult("request/result") {
@@ -36,12 +36,8 @@ object Main extends MapRoutes {
 
     StdIn.readLine()
 
-    server
-      .flatMap(_.unbind())
-      .onComplete { _ =>
-        system.terminate()
-      }
+    server.flatMap(_.unbind()).onComplete { _ =>
+      system.terminate()
+    }
   }
 }
-
-

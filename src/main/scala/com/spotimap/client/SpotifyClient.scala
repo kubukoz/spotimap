@@ -14,8 +14,8 @@ import scala.language.higherKinds
 object SpotifyClient {
   private val fullUrl: String => String = ApiPrefix + _
 
-  private[client] def get[Response: Decoder](path: String, absolute: Boolean = false)
-                                            (implicit token: SpotifyToken): SpotifyAlgebra[Response] = {
+  private[client] def get[Response: Decoder](path: String, absolute: Boolean = false)(
+    implicit token: SpotifyToken): SpotifyAlgebra[Response] = {
     val url = transformUrl(absolute)(path)
     Get(url, token, Decoder.apply)
   }

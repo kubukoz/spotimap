@@ -16,7 +16,7 @@ trait SpotifyInterpreter[F[_]] extends (SpotifyAlgebra ~> F)
 /**
   * An interpreter of the [[SpotifyAlgebra]] algebra using a HTTP Client.
   * */
-class SpotifyHttpInterpreter[F[_] : Monad](client: HttpClient[F]) extends SpotifyInterpreter[F] {
+class SpotifyHttpInterpreter[F[_]: Monad](client: HttpClient[F]) extends SpotifyInterpreter[F] {
   private def toHeaders(token: SpotifyToken): List[HttpHeader] = {
     val authorization = Authorization(OAuth2BearerToken(token.value))
     List(authorization)
