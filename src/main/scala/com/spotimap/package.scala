@@ -8,6 +8,6 @@ import scala.language.higherKinds
 
 package object spotimap {
   type SpotifyInterpreter[F[_]] = client.SpotifyInterpreter[F]
-  type Result[+T] = Future[T]
-  type SpotifyProgram[A] = Free[SpotifyAlgebra, A]
+  type Result[+T]               = Future[T]
+  type SpotifyProgram[A]        = Free[SpotifyAlgebra, A]
 }
