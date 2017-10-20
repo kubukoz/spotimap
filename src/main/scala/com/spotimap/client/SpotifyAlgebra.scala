@@ -1,7 +1,7 @@
 package com.spotimap.client
 
 import com.spotimap.model.external.SpotifyToken
-import io.circe.{Decoder, Encoder}
+import io.circe.Decoder
 
 sealed trait SpotifyAlgebra[Response]
 

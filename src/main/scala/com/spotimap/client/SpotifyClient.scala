@@ -4,7 +4,6 @@ import cats.instances.future._
 import cats.syntax.flatMap._
 import cats.syntax.functor._
 import com.spotimap.client.SpotifyAlgebra.Get
-import com.spotimap.config.SpotifyConfig
 import com.spotimap.config.SpotifyConfig.ApiPrefix
 import com.spotimap.model.external.SpotifyToken
 import io.circe.Decoder

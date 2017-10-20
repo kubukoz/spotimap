@@ -6,9 +6,9 @@ import akka.http.scaladsl.server.Directives.logRequestResult
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 import cats.instances.future._
-import com.spotimap.client._
+import com.spotimap.client.{SpotifyHttpInterpreter, _}
 import com.spotimap.util.Implicits.globalEC
-import com.spotimap.client.SpotifyHttpInterpreter
+
 import scala.io.StdIn
 import scala.language.higherKinds
 
