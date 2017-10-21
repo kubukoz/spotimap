@@ -32,11 +32,11 @@ object SpotifyApi {
 
   object userPlayer {
 
-    private def get()(implicit token: SpotifyToken): SpotifyProgram[Player] = liftF {
+    private def get(implicit token: SpotifyToken): SpotifyProgram[Player] = liftF {
       SpotifyClient.get[Player](PlayerUrl)
     }
 
-    def currentSongs()(implicit token: SpotifyToken): SpotifyProgram[List[Track]] = {
+    def currentSongs(implicit token: SpotifyToken): SpotifyProgram[List[Track]] = {
       val getItems: PlayerContext => SpotifyProgram[List[Track]] = {
         case PlaylistContext(href) =>
           playlist.getByUrl(href).map(_.tracks.items.map(_.track))
@@ -45,7 +45,7 @@ object SpotifyApi {
       }
 
       for {
-        player <- userPlayer.get()
+        player <- userPlayer.get
         tracks <- getItems(player.context)
       } yield tracks
     }

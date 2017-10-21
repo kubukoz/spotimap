@@ -5,7 +5,7 @@ import akka.http.scaladsl.server.Route
 import cats.instances.future._
 import com.spotimap.client.api.SpotifyApi
 import com.spotimap.config.ApplicationConfig
-import com.spotimap.util.Implicits.{convert, globalEC}
+import com.spotimap.util.Implicits.{globalEC, interpretAndConvert}
 import com.spotimap.Result
 import com.spotimap.client.impl.SpotifyInterpreter
 import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
