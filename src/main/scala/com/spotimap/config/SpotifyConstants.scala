@@ -17,7 +17,7 @@ object SpotifyConstants {
       authority = Authority(
         Host("accounts.spotify.com")
       ),
-      Path("authorize")
+      Path("/authorize")
     ).withQuery(
         Query(
           "client_id"     -> config.spotify.client.clientId,
