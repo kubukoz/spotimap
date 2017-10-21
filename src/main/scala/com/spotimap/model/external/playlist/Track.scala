@@ -1,6 +1,8 @@
 package com.spotimap.model.external.playlist
 
-case class Track(name: String)
+case class Artist(name: String)
+
+case class Track(name: String, artists: List[Artist])
 
 case class Item(track: Track)
 

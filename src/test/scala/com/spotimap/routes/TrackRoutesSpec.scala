@@ -45,8 +45,8 @@ class TrackRoutesSpec extends BaseRouteSpec with TrackRoutes {
           Playlist(
             Pager(
               List(
-                Item(Track("Heartbreak")),
-                Item(Track("Garden Dog Barbecue"))
+                Item(Track("Heartbreak", Nil)),
+                Item(Track("Garden Dog Barbecue", Nil))
               )
             )
           )
