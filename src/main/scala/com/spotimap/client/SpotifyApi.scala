@@ -5,8 +5,10 @@ import cats.syntax.applicative._
 import cats.syntax.flatMap._
 import cats.syntax.functor._
 import com.spotimap.SpotifyProgram
-import com.spotimap.config.SpotifyConfig.PlayerUrl
+import com.spotimap.config.SpotifyConstants.PlayerUrl
+import com.spotimap.config.{ApplicationConfig, SpotifyConstants}
 import com.spotimap.model.external.SpotifyToken
+import com.spotimap.model.external.auth.{AuthorizationCode, Tokens}
 import com.spotimap.model.external.player.{Player, PlayerContext, PlaylistContext}
 import com.spotimap.model.external.playlist.{Playlist, Track}
 import io.circe.generic.auto._
@@ -14,6 +16,20 @@ import io.circe.generic.auto._
 import scala.language.higherKinds
 
 object SpotifyApi {
+
+  object auth {
+
+    def token(authorizationCode: String)(implicit config: ApplicationConfig): SpotifyProgram[Tokens] = liftF {
+      implicit val transformUrl = TransformUrl.NoTransform
+      val authHeader            = config.spotify.client.authorizationHeader
+
+      SpotifyClient.postFormData[Tokens](
+        SpotifyConstants.TokensUrl,
+        AuthorizationCode(authorizationCode, config.spotify.redirectUri),
+        headers = List(authHeader)
+      )
+    }
+  }
 
   object userPlayer {
 
@@ -39,7 +55,9 @@ object SpotifyApi {
   private object playlist {
 
     def getByUrl(playlistUrl: String)(implicit token: SpotifyToken): SpotifyProgram[Playlist] = liftF {
-      SpotifyClient.get[Playlist](playlistUrl, absolute = true)
+      implicit val transformUrl = TransformUrl.NoTransform
+
+      SpotifyClient.get[Playlist](playlistUrl)
     }
   }
 }

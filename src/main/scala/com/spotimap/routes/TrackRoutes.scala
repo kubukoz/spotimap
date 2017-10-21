@@ -1,4 +1,4 @@
-package com.spotimap
+package com.spotimap.routes
 
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
@@ -6,17 +6,20 @@ import cats.instances.future._
 import com.spotimap.client.SpotifyApi
 import com.spotimap.directives._
 import com.spotimap.util.Implicits.{convert, globalEC}
-import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
+import com.spotimap.{Result, SpotifyInterpreter}
+import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
 
-trait MapRoutes {
+trait TrackRoutes {
   implicit val interpreter: SpotifyInterpreter[Result]
 
-  val mapRoutes: Route = {
+  val trackRoutes: Route = {
     spotifyToken { implicit token =>
-      get {
+      pathPrefix("tracks") {
         pathPrefix("current-tracks") {
-          complete {
-            SpotifyApi.userPlayer.currentSongs().map(_.map(_.name))
+          get {
+            complete {
+              SpotifyApi.userPlayer.currentSongs().map(_.map(_.name))
+            }
           }
         }
       }
