@@ -1,8 +1,8 @@
 package com.spotimap.config
 
 import akka.http.scaladsl.model.headers.{Authorization, BasicHttpCredentials}
-import com.spotimap.config.ApplicationConfig.{ServerConfig, SpotifyConfig}
 import com.spotimap.config.ApplicationConfig.SpotifyConfig.SpotifyClientConfig
+import com.spotimap.config.ApplicationConfig.{ServerConfig, SpotifyConfig}
 import pureconfig._
 
 case class ApplicationConfig(server: ServerConfig, spotify: SpotifyConfig)

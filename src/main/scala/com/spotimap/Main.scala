@@ -1,22 +1,19 @@
 package com.spotimap
 
-import javax.security.auth.login.AppConfigurationEntry
-
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.server.Directives.logRequestResult
+import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 import cats.instances.future._
-import com.spotimap.client.{SpotifyHttpInterpreter, _}
-import com.spotimap.config.{ApplicationConfig, SpotifyConstants}
+import com.spotimap.client._
 import com.spotimap.config.SpotifyConstants.Scope
+import com.spotimap.config.{ApplicationConfig, SpotifyConstants}
 import com.spotimap.routes.{AuthRoutes, TrackRoutes}
 import com.spotimap.util.Implicits.globalEC
 
 import scala.io.StdIn
 import scala.language.higherKinds
-import akka.http.scaladsl.server.Directives._
 
 object Main extends TrackRoutes with AuthRoutes {
   implicit protected val config: ApplicationConfig = ApplicationConfig.config

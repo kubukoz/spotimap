@@ -1,7 +1,6 @@
 package com.spotimap.client
 
 import akka.http.scaladsl.model.{FormData, HttpHeader}
-import akka.http.scaladsl.model.headers.Authorization
 import com.spotimap.model.external.SpotifyToken
 import io.circe.Decoder
 
