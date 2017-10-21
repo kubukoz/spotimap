@@ -1,4 +1,4 @@
-package com.spotimap.client
+package com.spotimap.client.api
 
 import cats.free.Free.liftF
 import cats.syntax.applicative._
@@ -7,8 +7,7 @@ import cats.syntax.functor._
 import com.spotimap.SpotifyProgram
 import com.spotimap.config.SpotifyConstants.PlayerUrl
 import com.spotimap.config.{ApplicationConfig, SpotifyConstants}
-import com.spotimap.model.external.SpotifyToken
-import com.spotimap.model.external.auth.{AuthorizationCode, Tokens}
+import com.spotimap.model.external.auth.{AuthorizationCode, SpotifyToken, Tokens}
 import com.spotimap.model.external.player.{Player, PlayerContext, PlaylistContext}
 import com.spotimap.model.external.playlist.{Playlist, Track}
 import io.circe.generic.auto._

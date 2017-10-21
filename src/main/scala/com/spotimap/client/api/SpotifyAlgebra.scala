@@ -1,7 +1,7 @@
-package com.spotimap.client
+package com.spotimap.client.api
 
 import akka.http.scaladsl.model.{FormData, HttpHeader}
-import com.spotimap.model.external.SpotifyToken
+import com.spotimap.model.external.auth.SpotifyToken
 import io.circe.Decoder
 
 sealed trait SpotifyAlgebra[Response]

@@ -1,4 +1,4 @@
-package com.spotimap.client
+package com.spotimap.client.impl
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http

@@ -1,12 +1,12 @@
-package com.spotimap.client
+package com.spotimap.client.api
 
 import akka.http.scaladsl.model.{FormData, HttpHeader}
 import cats.instances.future._
 import cats.syntax.flatMap._
 import cats.syntax.functor._
-import com.spotimap.client.SpotifyAlgebra.{Get, PostAsForm}
-import com.spotimap.client.TransformUrl.PrependPrefix
-import com.spotimap.model.external.SpotifyToken
+import com.spotimap.client.api.SpotifyAlgebra.{Get, PostAsForm}
+import com.spotimap.client.api.TransformUrl.PrependPrefix
+import com.spotimap.model.external.auth.SpotifyToken
 import io.circe.Decoder
 
 import scala.language.higherKinds

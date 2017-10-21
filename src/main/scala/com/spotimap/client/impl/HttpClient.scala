@@ -1,4 +1,4 @@
-package com.spotimap.client
+package com.spotimap.client.impl
 
 import akka.http.scaladsl.model.{HttpHeader, HttpMethod, RequestEntity}
 import cats.Monad

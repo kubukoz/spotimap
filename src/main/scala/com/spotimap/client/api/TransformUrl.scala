@@ -1,4 +1,4 @@
-package com.spotimap.client
+package com.spotimap.client.api
 
 import com.spotimap.config.SpotifyConstants.ApiPrefix
 

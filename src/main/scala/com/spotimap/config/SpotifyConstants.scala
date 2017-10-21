@@ -11,6 +11,9 @@ object SpotifyConstants {
   val TokensUrl = "https://accounts.spotify.com/api/token"
   val PlayerUrl = "/v1/me/player"
 
+  /**
+    * Generates the URL for the user to login and accept application access.
+    * */
   def loginUrl(scopes: List[Scope.Value])(implicit config: ApplicationConfig): String =
     Uri(
       scheme = "https",

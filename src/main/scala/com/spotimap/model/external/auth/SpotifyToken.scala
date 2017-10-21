@@ -1,6 +1,6 @@
-package com.spotimap.model.external
+package com.spotimap.model.external.auth
 
-import com.spotimap.model.external.SpotifyToken.{NoToken, UserToken}
+import com.spotimap.model.external.auth.SpotifyToken.{NoToken, UserToken}
 
 sealed trait SpotifyToken extends Product with Serializable {
 

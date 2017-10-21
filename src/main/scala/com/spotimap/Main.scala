@@ -6,7 +6,7 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 import cats.instances.future._
-import com.spotimap.client._
+import com.spotimap.client.impl.{HttpClient, HttpClientImpl, SpotifyHttpInterpreter}
 import com.spotimap.config.SpotifyConstants.Scope
 import com.spotimap.config.{ApplicationConfig, SpotifyConstants}
 import com.spotimap.routes.{AuthRoutes, TrackRoutes}

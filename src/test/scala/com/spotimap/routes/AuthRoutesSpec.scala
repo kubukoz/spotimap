@@ -1,6 +1,7 @@
 package com.spotimap.routes
 import com.spotimap.Result
-import com.spotimap.client.{SpotifyAlgebra, SpotifyInterpreter}
+import com.spotimap.client.api.SpotifyAlgebra
+import com.spotimap.client.impl.SpotifyInterpreter
 import com.spotimap.config.ApplicationConfig
 import com.spotimap.config.ApplicationConfig.SpotifyConfig.SpotifyClientConfig
 import com.spotimap.config.ApplicationConfig.{ServerConfig, SpotifyConfig}
