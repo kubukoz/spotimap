@@ -20,9 +20,7 @@ trait SpotifyInterpreter[F[_]] extends (SpotifyAlgebra ~> F)
 class SpotifyHttpInterpreter[F[_]: Monad](client: HttpClient[F]) extends SpotifyInterpreter[F] {
 
   private def toHeaders(token: SpotifyToken): List[HttpHeader] = {
-    token.value.map { tokenValue =>
-      Authorization(OAuth2BearerToken(tokenValue))
-    }.toList
+    token.value.map(OAuth2BearerToken).map(Authorization(_)).toList
   }
 
   override def apply[A](fa: SpotifyAlgebra[A]): F[A] = fa match {

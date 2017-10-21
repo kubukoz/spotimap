@@ -16,15 +16,14 @@ import scala.io.StdIn
 import scala.language.higherKinds
 
 object Main extends TrackRoutes with AuthRoutes {
-  implicit protected val config: ApplicationConfig = ApplicationConfig.config
+  implicit protected val config: ApplicationConfig     = ApplicationConfig.config
+  implicit private val system: ActorSystem             = ActorSystem("spotimap")
+  implicit private val materializer: ActorMaterializer = ActorMaterializer()
 
-  implicit val system: ActorSystem             = ActorSystem("spotimap")
-  implicit val materializer: ActorMaterializer = ActorMaterializer()
+  private val client: HttpClient[Result]                         = new HttpClientImpl()
+  override protected val interpreter: SpotifyInterpreter[Result] = new SpotifyHttpInterpreter(client)
 
-  private val client: HttpClient[Result]               = new HttpClientImpl
-  override val interpreter: SpotifyInterpreter[Result] = new SpotifyHttpInterpreter(client)
-
-  val routes: Route = logRequestResult("request/result") {
+  private val routes: Route = (logRequest("Request") & logResult("Result")) {
     trackRoutes ~ authRoutes
   }
 
@@ -32,7 +31,7 @@ object Main extends TrackRoutes with AuthRoutes {
     runServer()
   }
 
-  def runServer(): Unit = {
+  private def runServer(): Unit = {
     val port   = config.server.port
     val server = Http().bindAndHandle(routes, "localhost", port)
 
