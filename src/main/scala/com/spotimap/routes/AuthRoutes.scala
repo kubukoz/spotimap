@@ -16,7 +16,7 @@ trait AuthRoutes {
   implicit protected val config: ApplicationConfig
 
   val authRoutes: Route = get {
-    (pathPrefix("auth") & pathPrefix("code") & parameter("code")) { code =>
+    (pathPrefix("auth" / "code") & parameter("code")) { code =>
       complete {
         //todo do something with the token
         SpotifyApi.auth.token(code)

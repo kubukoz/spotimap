@@ -16,14 +16,13 @@ import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
 
 class TrackRoutesSpec extends BaseRouteSpec with TrackRoutes {
 
-  private val routes       = trackRoutes
   private val userToken    = "my-token"
   private val spotifyToken = SpotifyToken.UserToken(userToken)
   private val tokenHeader  = RawHeader("SPOTIFY-TOKEN", userToken)
 
   "MapRoutes" should {
     "show current playlist tracks" in {
-      Get("/tracks/current-tracks").withHeaders(List(tokenHeader)) ~> routes ~> check {
+      Get("/tracks/current-tracks").withHeaders(List(tokenHeader)) ~> trackRoutes ~> check {
         status shouldBe OK
         responseAs[List[String]] shouldBe List("Heartbreak", "Garden Dog Barbecue")
       }
@@ -56,6 +55,4 @@ class TrackRoutesSpec extends BaseRouteSpec with TrackRoutes {
       case _ => throw new UnsupportedOperationException
     }
   }
-
-  def wrap[A, B](value: A): Result[B] = value.asInstanceOf[B].pure[Result]
 }
