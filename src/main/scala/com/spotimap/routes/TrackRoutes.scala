@@ -11,7 +11,7 @@ import com.spotimap.client.impl.SpotifyInterpreter
 import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
 
 trait TrackRoutes {
-  implicit val interpreter: SpotifyInterpreter[Result]
+  implicit protected val interpreter: SpotifyInterpreter[Result]
 
   val trackRoutes: Route = {
     spotifyToken { implicit token =>
