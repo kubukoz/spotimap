@@ -3,7 +3,6 @@ package com.spotimap.routes
 import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.model.headers.RawHeader
 import cats.instances.future._
-import cats.syntax.applicative._
 import com.spotimap.Result
 import com.spotimap.client.api.SpotifyAlgebra
 import com.spotimap.client.api.SpotifyAlgebra.{Get => SpotifyGet}
@@ -11,7 +10,7 @@ import com.spotimap.client.impl.SpotifyInterpreter
 import com.spotimap.config.SpotifyConstants.{ApiPrefix, PlayerUrl}
 import com.spotimap.model.external.auth.SpotifyToken
 import com.spotimap.model.external.player.{Player, PlaylistContext}
-import com.spotimap.model.external.playlist.{Item, Pager, Playlist, Track}
+import com.spotimap.model.external.playlist._
 import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
 
 class TrackRoutesSpec extends BaseRouteSpec with TrackRoutes {
@@ -25,6 +24,14 @@ class TrackRoutesSpec extends BaseRouteSpec with TrackRoutes {
       Get("/tracks/current-tracks").withHeaders(List(tokenHeader)) ~> trackRoutes ~> check {
         status shouldBe OK
         responseAs[List[String]] shouldBe List("Heartbreak", "Garden Dog Barbecue")
+      }
+    }
+
+    "show current artists" in {
+      Get("/tracks/current-artists").withHeaders(List(tokenHeader)) ~> trackRoutes ~> check {
+        status shouldBe OK
+        //checking as list to make sure there are no duplicates
+        responseAs[List[String]] shouldBe List("Artist 1", "Artist 2", "Artist 3")
       }
     }
   }
@@ -45,8 +52,8 @@ class TrackRoutesSpec extends BaseRouteSpec with TrackRoutes {
           Playlist(
             Pager(
               List(
-                Item(Track("Heartbreak", Nil)),
-                Item(Track("Garden Dog Barbecue", Nil))
+                Item(Track("Heartbreak", List(Artist("Artist 1"), Artist("Artist 2")))),
+                Item(Track("Garden Dog Barbecue", List(Artist("Artist 2"), Artist("Artist 3"))))
               )
             )
           )
