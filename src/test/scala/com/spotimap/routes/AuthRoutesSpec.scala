@@ -18,7 +18,7 @@ class AuthRoutesSpec extends BaseRouteSpec with AuthRoutes {
   private val clientId          = "client-id"
   private val clientSecret      = "client-secret"
   private val authorizationCode = "auth-code"
-  private val redirectUri       = "http://redirect-uri"
+  private val redirectUri       = "http://spotimap.com:80/auth/code"
   private val scopes            = "some scopes"
   private val refreshToken      = "refresh-token"
 
@@ -56,5 +56,6 @@ class AuthRoutesSpec extends BaseRouteSpec with AuthRoutes {
   }
 
   override implicit protected val config: ApplicationConfig =
-    new ApplicationConfig(ServerConfig(8080), SpotifyConfig(SpotifyClientConfig(clientId, clientSecret), redirectUri))
+    new ApplicationConfig(ServerConfig(80, "http://spotimap.com"),
+                          SpotifyConfig(SpotifyClientConfig(clientId, clientSecret)))
 }

@@ -24,7 +24,7 @@ object SpotifyApi {
 
       SpotifyClient.postFormData[Tokens](
         SpotifyConstants.TokensUrl,
-        AuthorizationCode(authorizationCode, config.spotify.redirectUri),
+        AuthorizationCode(authorizationCode, SpotifyConstants.redirectUri),
         headers = List(authHeader)
       )
     }

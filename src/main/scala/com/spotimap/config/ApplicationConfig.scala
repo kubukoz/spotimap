@@ -9,9 +9,9 @@ case class ApplicationConfig(server: ServerConfig, spotify: SpotifyConfig)
 
 object ApplicationConfig {
 
-  case class ServerConfig(port: Int)
+  case class ServerConfig(port: Int, host: String)
 
-  case class SpotifyConfig(client: SpotifyClientConfig, redirectUri: String)
+  case class SpotifyConfig(client: SpotifyClientConfig)
 
   object SpotifyConfig {
 

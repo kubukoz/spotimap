@@ -11,6 +11,9 @@ object SpotifyConstants {
   val TokensUrl = "https://accounts.spotify.com/api/token"
   val PlayerUrl = "/v1/me/player"
 
+  def redirectUri(implicit config: ApplicationConfig): String =
+    s"${config.server.host}:${config.server.port}/auth/code"
+
   /**
     * Generates the URL for the user to login and accept application access.
     * */
@@ -25,7 +28,7 @@ object SpotifyConstants {
         Query(
           "client_id"     -> config.spotify.client.clientId,
           "response_type" -> "code",
-          "redirect_uri"  -> config.spotify.redirectUri,
+          "redirect_uri"  -> redirectUri,
           "scope"         -> scopes.map(_.name).mkString(" ")
         )
       )
