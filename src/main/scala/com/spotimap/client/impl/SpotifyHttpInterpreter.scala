@@ -8,7 +8,7 @@ import cats.syntax.functor._
 import cats.{~>, Monad}
 import com.spotimap.client.api.SpotifyAlgebra
 import com.spotimap.client.api.SpotifyAlgebra.{Get, PostAsForm}
-import com.spotimap.model.external.auth.SpotifyToken
+import com.spotimap.client.model.auth.SpotifyToken
 
 import scala.language.higherKinds
 

@@ -1,4 +1,4 @@
-package com.spotimap.model.external.player
+package com.spotimap.client.model.player
 
 import io.circe.Decoder
 import io.circe.generic.semiauto

@@ -7,10 +7,10 @@ import com.spotimap.Result
 import com.spotimap.client.api.SpotifyAlgebra
 import com.spotimap.client.api.SpotifyAlgebra.{Get => SpotifyGet}
 import com.spotimap.client.impl.SpotifyInterpreter
-import com.spotimap.config.SpotifyConstants.{ApiPrefix, PlayerUrl}
-import com.spotimap.model.external.auth.SpotifyToken
-import com.spotimap.model.external.player.{Player, PlaylistContext}
-import com.spotimap.model.external.playlist._
+import com.spotimap.client.model.config.SpotifyConstants.{ApiPrefix, PlayerUrl}
+import com.spotimap.client.model.auth.SpotifyToken
+import com.spotimap.client.model.player.{Player, PlaylistContext}
+import com.spotimap.client.model.playlist._
 import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
 
 class TrackRoutesSpec extends BaseRouteSpec with TrackRoutes {

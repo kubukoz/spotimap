@@ -1,6 +1,6 @@
 package com.spotimap.client.api
 
-import com.spotimap.config.SpotifyConstants.ApiPrefix
+import com.spotimap.client.model.config.SpotifyConstants.ApiPrefix
 
 sealed trait TransformUrl extends Product with Serializable {
 

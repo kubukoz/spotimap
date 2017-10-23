@@ -1,4 +1,4 @@
-package com.spotimap.model.external.auth
+package com.spotimap.client.model.auth
 
 import io.circe.generic.extras.{Configuration, ConfiguredJsonCodec}
 

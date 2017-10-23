@@ -7,8 +7,9 @@ import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
 import cats.instances.future._
 import com.spotimap.client.impl.{HttpClient, HttpClientImpl, SpotifyHttpInterpreter}
-import com.spotimap.config.SpotifyConstants.Scope
-import com.spotimap.config.{ApplicationConfig, SpotifyConstants}
+import com.spotimap.client.model.auth.Scope
+import com.spotimap.client.model.config.{SpotifyConfig, SpotifyConstants}
+import com.spotimap.config.ApplicationConfig
 import com.spotimap.routes.{AuthRoutes, TrackRoutes}
 import com.spotimap.util.Implicits.globalEC
 
@@ -16,7 +17,9 @@ import scala.io.StdIn
 import scala.language.higherKinds
 
 object Main extends TrackRoutes with AuthRoutes {
-  implicit protected val config: ApplicationConfig     = ApplicationConfig.config
+  implicit protected val config: ApplicationConfig  = ApplicationConfig.config
+  implicit private val spotifyConfig: SpotifyConfig = config.spotify
+
   implicit private val system: ActorSystem             = ActorSystem("spotimap")
   implicit private val materializer: ActorMaterializer = ActorMaterializer()
 
@@ -35,7 +38,7 @@ object Main extends TrackRoutes with AuthRoutes {
     val port   = config.server.port
     val server = Http().bindAndHandle(routes, "localhost", port)
 
-    val loginUrl = SpotifyConstants.loginUrl(Scope.values.toList)
+    val loginUrl = SpotifyConstants.loginUrl(config.redirectUri, Scope.values.toList)
 
     println(s"Server online at http://localhost:$port/\nPress RETURN to stop...")
     println(s"Open $loginUrl to get a token")

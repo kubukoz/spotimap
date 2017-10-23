@@ -7,10 +7,10 @@ import com.spotimap.Result
 import com.spotimap.client.api.SpotifyAlgebra
 import com.spotimap.client.api.SpotifyAlgebra.PostAsForm
 import com.spotimap.client.impl.SpotifyInterpreter
-import com.spotimap.config.ApplicationConfig.SpotifyConfig.SpotifyClientConfig
-import com.spotimap.config.ApplicationConfig.{ServerConfig, SpotifyConfig}
-import com.spotimap.config.{ApplicationConfig, SpotifyConstants}
-import com.spotimap.model.external.auth.Tokens
+import com.spotimap.client.model.auth.Tokens
+import com.spotimap.client.model.config.{SpotifyConfig, SpotifyConstants}
+import com.spotimap.config.ApplicationConfig
+import com.spotimap.config.ApplicationConfig.ServerConfig
 import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
 
 class AuthRoutesSpec extends BaseRouteSpec with AuthRoutes {
@@ -56,6 +56,5 @@ class AuthRoutesSpec extends BaseRouteSpec with AuthRoutes {
   }
 
   override implicit protected val config: ApplicationConfig =
-    new ApplicationConfig(ServerConfig(80, "http://spotimap.com"),
-                          SpotifyConfig(SpotifyClientConfig(clientId, clientSecret)))
+    new ApplicationConfig(ServerConfig(80, "http://spotimap.com"), SpotifyConfig(clientId, clientSecret))
 }

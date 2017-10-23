@@ -5,11 +5,11 @@ import cats.syntax.applicative._
 import cats.syntax.flatMap._
 import cats.syntax.functor._
 import com.spotimap.SpotifyProgram
-import com.spotimap.config.SpotifyConstants.PlayerUrl
-import com.spotimap.config.{ApplicationConfig, SpotifyConstants}
-import com.spotimap.model.external.auth.{AuthorizationCode, SpotifyToken, Tokens}
-import com.spotimap.model.external.player.{Player, PlayerContext, PlaylistContext}
-import com.spotimap.model.external.playlist.{Artist, Playlist, Track}
+import com.spotimap.client.model.auth.{AuthorizationCode, SpotifyToken, Tokens}
+import com.spotimap.client.model.config.SpotifyConstants.PlayerUrl
+import com.spotimap.client.model.config.{SpotifyConfig, SpotifyConstants}
+import com.spotimap.client.model.player.{Player, PlayerContext, PlaylistContext}
+import com.spotimap.client.model.playlist.{Artist, Playlist, Track}
 import io.circe.generic.auto._
 
 import scala.language.higherKinds
@@ -18,16 +18,17 @@ object SpotifyApi {
 
   object auth {
 
-    def token(authorizationCode: String)(implicit config: ApplicationConfig): SpotifyProgram[Tokens] = liftF {
-      implicit val transformUrl = TransformUrl.NoTransform
-      val authHeader            = config.spotify.client.authorizationHeader
+    def token(authorizationCode: String, redirectUri: String)(implicit config: SpotifyConfig): SpotifyProgram[Tokens] =
+      liftF {
+        implicit val transformUrl: TransformUrl = TransformUrl.NoTransform
+        val authHeader                          = config.authorizationHeader
 
-      SpotifyClient.postFormData[Tokens](
-        SpotifyConstants.TokensUrl,
-        AuthorizationCode(authorizationCode, SpotifyConstants.redirectUri),
-        headers = List(authHeader)
-      )
-    }
+        SpotifyClient.postFormData[Tokens](
+          SpotifyConstants.TokensUrl,
+          AuthorizationCode(authorizationCode, redirectUri),
+          headers = List(authHeader)
+        )
+      }
   }
 
   object userPlayer {

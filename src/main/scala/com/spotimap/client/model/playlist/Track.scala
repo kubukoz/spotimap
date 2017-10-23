@@ -1,4 +1,4 @@
-package com.spotimap.model.external.playlist
+package com.spotimap.client.model.playlist
 
 case class Artist(name: String)
 

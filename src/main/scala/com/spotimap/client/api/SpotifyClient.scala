@@ -6,7 +6,7 @@ import cats.syntax.flatMap._
 import cats.syntax.functor._
 import com.spotimap.client.api.SpotifyAlgebra.{Get, PostAsForm}
 import com.spotimap.client.api.TransformUrl.PrependPrefix
-import com.spotimap.model.external.auth.SpotifyToken
+import com.spotimap.client.model.auth.SpotifyToken
 import io.circe.Decoder
 
 import scala.language.higherKinds
