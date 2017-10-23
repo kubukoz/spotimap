@@ -9,24 +9,23 @@ import akka.stream.Materializer
 import cats.instances.future._
 import cats.syntax.flatMap._
 import cats.syntax.functor._
-import com.spotimap.Result
 import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
 import io.circe.{Decoder, Encoder}
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 import scala.language.higherKinds
 
-class HttpClientImpl(implicit system: ActorSystem, am: Materializer, ec: ExecutionContext) extends HttpClient[Result] {
+class HttpClientImpl(implicit system: ActorSystem, am: Materializer, ec: ExecutionContext) extends HttpClient[Future] {
 
   private val http = Http()
 
-  override private[client] def serialize[T: Encoder](input: T): Result[RequestEntity] =
+  override private[client] def serialize[T: Encoder](input: T): Future[RequestEntity] =
     Marshal(input).to[RequestEntity]
 
   override private[client] def httpCallRaw[T: Decoder](method: HttpMethod,
                                                        path: String,
                                                        body: Option[RequestEntity],
-                                                       headers: List[HttpHeader]): Result[T] = {
+                                                       headers: List[HttpHeader]): Future[T] = {
 
     val request = HttpRequest(
       method = method,

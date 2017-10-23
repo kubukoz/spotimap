@@ -13,6 +13,4 @@ object ApplicationConfig {
   case class ServerConfig(port: Int, host: String)
 
   val config: ApplicationConfig = loadConfigOrThrow[ApplicationConfig]
-
-  implicit def toSpotify(config: ApplicationConfig): SpotifyConfig = config.spotify
 }

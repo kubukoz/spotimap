@@ -4,7 +4,7 @@ import cats.free.Free.liftF
 import cats.syntax.applicative._
 import cats.syntax.flatMap._
 import cats.syntax.functor._
-import com.spotimap.SpotifyProgram
+import com.spotimap.client.SpotifyProgram
 import com.spotimap.client.model.auth.{AuthorizationCode, SpotifyToken, Tokens}
 import com.spotimap.client.model.config.SpotifyConstants.PlayerUrl
 import com.spotimap.client.model.config.{SpotifyConfig, SpotifyConstants}
@@ -59,7 +59,7 @@ object SpotifyApi {
   private object playlist {
 
     def getByUrl(playlistUrl: String)(implicit token: SpotifyToken): SpotifyProgram[Playlist] = liftF {
-      implicit val transformUrl = TransformUrl.NoTransform
+      implicit val transformUrl: TransformUrl = TransformUrl.NoTransform
 
       SpotifyClient.get[Playlist](playlistUrl)
     }
