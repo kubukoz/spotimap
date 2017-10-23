@@ -1,7 +1,7 @@
 package com.spotimap
 
 import akka.http.scaladsl.server.{Directive1, Directives}
-import com.spotimap.client.model.auth.SpotifyToken.UserToken
+import com.kubukoz.spotify.client.model.auth.SpotifyToken.UserToken
 
 package object directives {
 

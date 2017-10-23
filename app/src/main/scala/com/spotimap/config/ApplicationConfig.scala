@@ -1,6 +1,6 @@
 package com.spotimap.config
 
-import com.spotimap.client.model.config.SpotifyConfig
+import com.kubukoz.spotify.client.model.config.SpotifyConfig
 import com.spotimap.config.ApplicationConfig.ServerConfig
 import pureconfig._
 

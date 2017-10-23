@@ -3,11 +3,11 @@ package com.spotimap.routes
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.Route
 import cats.instances.future._
-import com.spotimap.client.api.SpotifyApi
+import com.kubukoz.spotify.client.impl.SpotifyInterpreter
+import com.spotimap.Result
+import com.spotimap.calls.Calls
 import com.spotimap.directives._
 import com.spotimap.util.Implicits.{globalEC, interpretAndConvert}
-import com.spotimap.Result
-import com.spotimap.client.impl.SpotifyInterpreter
 import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
 
 trait TrackRoutes {
@@ -19,13 +19,13 @@ trait TrackRoutes {
         pathPrefix("current-tracks") {
           get {
             complete {
-              SpotifyApi.userPlayer.currentSongs.map(_.map(_.name))
+              Calls.currentSongs.map(_.map(_.name))
             }
           }
         } ~ pathPrefix("current-artists") {
           get {
             complete {
-              SpotifyApi.userPlayer.currentArtists.map(_.map(_.name))
+              Calls.currentArtists.map(_.map(_.name))
             }
           }
         }

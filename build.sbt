@@ -30,10 +30,10 @@ lazy val appDeps = commonDeps ++ Seq(
 lazy val macroParadise = addCompilerPlugin(("org.scalamacros" % "paradise" % "2.1.0").cross(CrossVersion.full))
 
 lazy val client = project.settings(
-  organization := "com.spotimap",
+  organization := "com.kubukoz",
   scalaVersion := "2.12.4",
   version := "0.1.0",
-  name := "spotimap-client",
+  name := "spotify-client",
   libraryDependencies ++= clientDeps,
   macroParadise
 )

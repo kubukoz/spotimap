@@ -2,8 +2,8 @@ package com.spotimap.util
 
 import akka.http.scaladsl.marshalling.{ToResponseMarshallable, ToResponseMarshaller}
 import cats.Monad
-import com.spotimap.client.SpotifyProgram
-import com.spotimap.client.impl.SpotifyInterpreter
+import com.kubukoz.spotify.client.SpotifyProgram
+import com.kubukoz.spotify.client.impl.SpotifyInterpreter
 
 import scala.concurrent.ExecutionContext
 import scala.language.{higherKinds, implicitConversions}
