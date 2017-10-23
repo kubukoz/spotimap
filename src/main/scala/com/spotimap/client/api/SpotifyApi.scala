@@ -9,7 +9,7 @@ import com.spotimap.config.SpotifyConstants.PlayerUrl
 import com.spotimap.config.{ApplicationConfig, SpotifyConstants}
 import com.spotimap.model.external.auth.{AuthorizationCode, SpotifyToken, Tokens}
 import com.spotimap.model.external.player.{Player, PlayerContext, PlaylistContext}
-import com.spotimap.model.external.playlist.{Playlist, Track}
+import com.spotimap.model.external.playlist.{Artist, Playlist, Track}
 import io.circe.generic.auto._
 
 import scala.language.higherKinds
@@ -34,6 +34,10 @@ object SpotifyApi {
 
     private def get(implicit token: SpotifyToken): SpotifyProgram[Player] = liftF {
       SpotifyClient.get[Player](PlayerUrl)
+    }
+
+    def currentArtists(implicit token: SpotifyToken): SpotifyProgram[Set[Artist]] = {
+      currentSongs.map(_.flatMap(_.artists).toSet)
     }
 
     def currentSongs(implicit token: SpotifyToken): SpotifyProgram[List[Track]] = {

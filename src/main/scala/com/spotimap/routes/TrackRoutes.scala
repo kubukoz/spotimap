@@ -22,6 +22,12 @@ trait TrackRoutes {
               SpotifyApi.userPlayer.currentSongs.map(_.map(_.name))
             }
           }
+        } ~ pathPrefix("current-artists") {
+          get {
+            complete {
+              SpotifyApi.userPlayer.currentArtists.map(_.map(_.name))
+            }
+          }
         }
       }
     }
