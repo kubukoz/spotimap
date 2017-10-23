@@ -16,7 +16,7 @@ spotify {
 }
 ```
 
-1. `sbt run`
+1. `sbt app/run`
 
 1. Get an access token, e.g. by clicking the link that will appear in the standard output.
 

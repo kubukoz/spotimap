@@ -1,7 +1,6 @@
 import sbt.addCompilerPlugin
 
 lazy val akkaHttpVersion      = "10.0.10"
-lazy val akkaVersion          = "2.5.4"
 lazy val circeVersion         = "0.8.0"
 lazy val catsVersion          = "0.9.0"
 lazy val akkaHttpCirceVersion = "1.18.0"
@@ -12,12 +11,9 @@ lazy val scalatestVersion     = "3.0.1"
 lazy val commonDeps = Seq(
   "com.typesafe.akka" %% "akka-http"            % akkaHttpVersion,
   "de.heikoseeberger" %% "akka-http-circe"      % akkaHttpCirceVersion,
-  "com.typesafe.akka" %% "akka-http-xml"        % akkaHttpVersion,
-  "com.typesafe.akka" %% "akka-stream"          % akkaVersion,
   "io.circe"          %% "circe-core"           % circeVersion,
   "io.circe"          %% "circe-generic"        % circeVersion,
   "io.circe"          %% "circe-generic-extras" % circeVersion,
-  "io.circe"          %% "circe-parser"         % circeVersion,
   "org.spire-math"    %% "kind-projector"       % kindProjectorVersion,
   "org.typelevel"     %% "cats-core"            % catsVersion,
   "org.typelevel"     %% "cats-free"            % catsVersion
