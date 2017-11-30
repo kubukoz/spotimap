@@ -9,7 +9,8 @@ sealed trait PlayerContext extends Product with Serializable
 
 object PlayerContext {
   private val decoders = Map(
-    "playlist" -> semiauto.deriveDecoder[PlaylistContext]
+    "playlist" -> semiauto.deriveDecoder[PlaylistContext],
+    "album"    -> semiauto.deriveDecoder[AlbumContext]
   )
 
   implicit val decoder: Decoder[PlayerContext] = for {
@@ -19,3 +20,5 @@ object PlayerContext {
 }
 
 case class PlaylistContext(href: String) extends PlayerContext
+
+case class AlbumContext(href: String) extends PlayerContext

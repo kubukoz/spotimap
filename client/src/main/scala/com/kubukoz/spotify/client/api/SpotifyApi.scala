@@ -8,7 +8,7 @@ import com.kubukoz.spotify.client.model.auth.{AuthorizationCode, SpotifyToken, T
 import com.kubukoz.spotify.client.model.config.SpotifyConstants.PlayerUrl
 import com.kubukoz.spotify.client.model.config.{SpotifyConfig, SpotifyConstants}
 import com.kubukoz.spotify.client.model.player.Player
-import com.kubukoz.spotify.client.model.playlist.Playlist
+import com.kubukoz.spotify.client.model.playlist._
 import io.circe.generic.auto._
 
 import scala.language.higherKinds
@@ -43,6 +43,27 @@ object SpotifyApi {
       implicit val transformUrl: TransformUrl = TransformUrl.NoTransform
 
       SpotifyClient.get[Playlist](playlistUrl)
+    }
+
+    def getTracksByUrl(playlistUrl: String)(implicit token: SpotifyToken): SpotifyProgram[Pager[Item]] = liftF {
+      implicit val transformUrl: TransformUrl = TransformUrl.NoTransform
+
+      SpotifyClient.get[Pager[Item]](playlistUrl)
+    }
+  }
+
+  object album {
+
+    def getByUrl(albumUrl: String)(implicit token: SpotifyToken): SpotifyProgram[Album] = liftF {
+      implicit val transformUrl: TransformUrl = TransformUrl.NoTransform
+
+      SpotifyClient.get[Album](albumUrl)
+    }
+
+    def getTracksByUrl(playlistUrl: String)(implicit token: SpotifyToken): SpotifyProgram[Pager[Track]] = liftF {
+      implicit val transformUrl: TransformUrl = TransformUrl.NoTransform
+
+      SpotifyClient.get[Pager[Track]](playlistUrl)
     }
   }
 }

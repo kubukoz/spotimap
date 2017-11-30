@@ -50,7 +50,7 @@ class TrackRoutesSpec extends BaseRouteSpec with TrackRoutes {
       case SpotifyGet("playlistUrl", `spotifyToken`, _) =>
         wrap {
           Playlist(
-            Pager(
+            Pager.complete(
               List(
                 Item(Track("Heartbreak", List(Artist("Artist 1"), Artist("Artist 2")))),
                 Item(Track("Garden Dog Barbecue", List(Artist("Artist 2"), Artist("Artist 3"))))

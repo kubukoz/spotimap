@@ -14,7 +14,6 @@ lazy val commonDeps = Seq(
   "io.circe"          %% "circe-core"           % circeVersion,
   "io.circe"          %% "circe-generic"        % circeVersion,
   "io.circe"          %% "circe-generic-extras" % circeVersion,
-  "org.spire-math"    %% "kind-projector"       % kindProjectorVersion,
   "org.typelevel"     %% "cats-core"            % catsVersion,
   "org.typelevel"     %% "cats-free"            % catsVersion
 )
@@ -28,6 +27,7 @@ lazy val appDeps = commonDeps ++ Seq(
 )
 
 lazy val macroParadise = addCompilerPlugin(("org.scalamacros" % "paradise" % "2.1.0").cross(CrossVersion.full))
+lazy val kindProjector = addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.4")
 
 lazy val client = project.settings(
   organization := "com.kubukoz",
@@ -44,7 +44,8 @@ lazy val app = project
     scalaVersion := "2.12.4",
     version := "0.1.0",
     name := "spotimap-app",
-    libraryDependencies ++= appDeps
+    libraryDependencies ++= appDeps,
+    kindProjector
   )
   .dependsOn(client)
 
