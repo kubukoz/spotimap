@@ -9,6 +9,7 @@ import com.kubukoz.spotify.client.model.config.SpotifyConstants.PlayerUrl
 import com.kubukoz.spotify.client.model.config.{SpotifyConfig, SpotifyConstants}
 import com.kubukoz.spotify.client.model.player.Player
 import com.kubukoz.spotify.client.model.playlist._
+import io.circe.Decoder
 import io.circe.generic.auto._
 
 import scala.language.higherKinds
@@ -37,33 +38,26 @@ object SpotifyApi {
     }
   }
 
+  private def getByUrl[T: Decoder](url: String)(implicit token: SpotifyToken): SpotifyProgram[T] = liftF {
+    implicit val prefix: TransformUrl = TransformUrl.NoTransform
+    SpotifyClient.get[T](url)
+  }
+
   object playlist {
 
-    def getByUrl(playlistUrl: String)(implicit token: SpotifyToken): SpotifyProgram[Playlist] = liftF {
-      implicit val transformUrl: TransformUrl = TransformUrl.NoTransform
+    def getByUrl(url: String)(implicit token: SpotifyToken): SpotifyProgram[Playlist] =
+      SpotifyApi.getByUrl[Playlist](url)
 
-      SpotifyClient.get[Playlist](playlistUrl)
-    }
-
-    def getTracksByUrl(playlistUrl: String)(implicit token: SpotifyToken): SpotifyProgram[Pager[Item]] = liftF {
-      implicit val transformUrl: TransformUrl = TransformUrl.NoTransform
-
-      SpotifyClient.get[Pager[Item]](playlistUrl)
-    }
+    def getTracksByUrl(url: String)(implicit token: SpotifyToken): SpotifyProgram[Pager[Item]] =
+      SpotifyApi.getByUrl[Pager[Item]](url)
   }
 
   object album {
 
-    def getByUrl(albumUrl: String)(implicit token: SpotifyToken): SpotifyProgram[Album] = liftF {
-      implicit val transformUrl: TransformUrl = TransformUrl.NoTransform
+    def getByUrl(url: String)(implicit token: SpotifyToken): SpotifyProgram[Album] =
+      SpotifyApi.getByUrl[Album](url)
 
-      SpotifyClient.get[Album](albumUrl)
-    }
-
-    def getTracksByUrl(playlistUrl: String)(implicit token: SpotifyToken): SpotifyProgram[Pager[Track]] = liftF {
-      implicit val transformUrl: TransformUrl = TransformUrl.NoTransform
-
-      SpotifyClient.get[Pager[Track]](playlistUrl)
-    }
+    def getTracksByUrl(url: String)(implicit token: SpotifyToken): SpotifyProgram[Pager[Track]] =
+      SpotifyApi.getByUrl[Pager[Track]](url)
   }
 }

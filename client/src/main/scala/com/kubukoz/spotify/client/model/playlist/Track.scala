@@ -34,7 +34,9 @@ final case class Pager[T](items: List[T], offset: Int, total: Int, previous: Opt
 }
 
 object Pager {
+
   def complete[T](items: List[T]): Pager[T] = Pager(items, 0, items.size, None, None)
+
   def empty[T]: Pager[T] = Pager(Nil, 0, 0, None, None)
 }
 
