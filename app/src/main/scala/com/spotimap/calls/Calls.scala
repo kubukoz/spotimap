@@ -18,8 +18,10 @@ object Calls {
     val getItemsPager: PlayerContext => SpotifyProgram[Pager[Track]] = {
       case PlaylistContext(href) =>
         playlist.getByUrl(href).flatMap(_.tracks.consumeAll(playlist.getTracksByUrl)).map(_.map(_.track))
+
       case AlbumContext(href) =>
-        album.getByUrl(href).map(_.tracks).flatMap(_.consumeAll(album.getTracksByUrl))
+        album.getByUrl(href).flatMap(_.tracks.consumeAll(album.getTracksByUrl))
+
       case _ => Pager.empty[Track].pure[SpotifyProgram]
     }
 
