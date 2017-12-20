@@ -9,8 +9,9 @@ import akka.stream.Materializer
 import cats.instances.future._
 import cats.syntax.flatMap._
 import cats.syntax.functor._
+import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport
 import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
-import io.circe.{Decoder, Encoder}
+import io.circe.{Decoder, Encoder, Json}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.language.higherKinds
@@ -34,9 +35,16 @@ class HttpClientImpl(implicit system: ActorSystem, am: Materializer, ec: Executi
       entity = body.getOrElse(HttpEntity.Empty)
     )
 
+    //shamelessly stolen from ErrorAccumulatingUnmarshaller
+    def decode(json: Json) =
+      Decoder[T]
+        .accumulating(json.hcursor)
+        .fold(failures => throw ErrorAccumulatingCirceSupport.DecodingFailures(failures), identity)
+
     for {
       response <- http.singleRequest(request)
-      result   <- Unmarshal(response.entity).to[T]
+      json     <- Unmarshal(response.entity).to[Json]
+      result = decode(json)
     } yield result
   }
 
