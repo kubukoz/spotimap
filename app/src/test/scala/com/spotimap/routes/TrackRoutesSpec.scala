@@ -3,14 +3,15 @@ package com.spotimap.routes
 import akka.http.scaladsl.model.StatusCodes._
 import akka.http.scaladsl.model.headers.RawHeader
 import cats.instances.future._
-import com.spotimap.Result
 import com.kubukoz.spotify.client.api.SpotifyAlgebra
 import com.kubukoz.spotify.client.api.SpotifyAlgebra.{Get => SpotifyGet}
 import com.kubukoz.spotify.client.impl.SpotifyInterpreter
-import com.kubukoz.spotify.client.model.config.SpotifyConstants.{ApiPrefix, PlayerUrl}
+import com.kubukoz.spotify.client.model.Pager
 import com.kubukoz.spotify.client.model.auth.SpotifyToken
+import com.kubukoz.spotify.client.model.config.SpotifyConstants.{ApiPrefix, PlayerUrl}
 import com.kubukoz.spotify.client.model.player.{Player, PlaylistContext}
 import com.kubukoz.spotify.client.model.playlist._
+import com.spotimap.Result
 import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
 
 class TrackRoutesSpec extends BaseRouteSpec with TrackRoutes {

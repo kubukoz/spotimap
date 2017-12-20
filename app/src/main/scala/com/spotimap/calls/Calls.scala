@@ -3,6 +3,7 @@ package com.spotimap.calls
 import cats.syntax.applicative._
 import com.kubukoz.spotify.client.SpotifyProgram
 import com.kubukoz.spotify.client.api.SpotifyApi.{album, playlist, userPlayer}
+import com.kubukoz.spotify.client.model.Pager
 import com.kubukoz.spotify.client.model.auth.SpotifyToken
 import com.kubukoz.spotify.client.model.player.{AlbumContext, PlayerContext, PlaylistContext}
 import com.kubukoz.spotify.client.model.playlist._

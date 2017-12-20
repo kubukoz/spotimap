@@ -4,6 +4,7 @@ import cats.free.Free.liftF
 import cats.syntax.flatMap._
 import cats.syntax.functor._
 import com.kubukoz.spotify.client.SpotifyProgram
+import com.kubukoz.spotify.client.model.Pager
 import com.kubukoz.spotify.client.model.auth.{AuthorizationCode, SpotifyToken, Tokens}
 import com.kubukoz.spotify.client.model.config.SpotifyConstants.PlayerUrl
 import com.kubukoz.spotify.client.model.config.{SpotifyConfig, SpotifyConstants}
